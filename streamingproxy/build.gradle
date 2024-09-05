@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../export_aar.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION.toInteger()
@@ -15,8 +16,12 @@ android {
           proguardFiles rootProject.file('proguard.txt')
         }
     }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.core:core-ktx:1.13.1'
 }

@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.exoplayer2.Format;
+import com.tritondigital.player.exovisualizer.FFTAudioProcessor;
 import com.tritondigital.util.Log;
 import com.tritondigital.util.NetworkUtil;
 import com.tritondigital.util.SdkUtil;
@@ -64,6 +65,10 @@ public class StationPlayer extends MediaPlayer
 
     private static final String DOMAIN_NAME_PROD = "example.com";
     private static final String DOMAIN_NAME_PREPROD = "example.prepord.net";
+
+    public FFTAudioProcessor getFftAudioProcessor() {
+        return mStreamPlayer.getFftAudioProcessor();
+    }
 
     /**
      * Constructor
