@@ -301,6 +301,7 @@ public class StationPlayer extends MediaPlayer
                 Integer lowDelay                = stationSettings.getInt(SETTINGS_LOW_DELAY, 0);
                 String[] tTags                  = stationSettings.getStringArray(SETTINGS_TTAGS);
                 boolean disableExoPlayer        = stationSettings.getBoolean(PlayerConsts.FORCE_DISABLE_EXOPLAYER, false);
+                boolean enableExoPlayer        = stationSettings.getBoolean(PlayerConsts.FORCE_ENABLE_EXOPLAYER, false);
                 Serializable dmpSegments        = stationSettings.getSerializable(SETTINGS_DMP_SEGMENTS);
 
                 streamSettings.putBoolean(StreamPlayer.SETTINGS_TARGETING_LOCATION_TRACKING_ENABLED, locationTrackingEnabled);
@@ -315,6 +316,7 @@ public class StationPlayer extends MediaPlayer
                 streamSettings.putString(StreamPlayer.SETTINGS_STATION_MOUNT, mount);
                 streamSettings.putInt(StreamPlayer.SETTINGS_LOW_DELAY, lowDelay);
                 streamSettings.putBoolean(PlayerConsts.FORCE_DISABLE_EXOPLAYER, disableExoPlayer);
+                streamSettings.putBoolean(PlayerConsts.FORCE_ENABLE_EXOPLAYER, enableExoPlayer);
                 streamSettings.putSerializable(StreamPlayer.SETTINGS_DMP_SEGMENTS, dmpSegments);
 
                 //update transport on stationSettings

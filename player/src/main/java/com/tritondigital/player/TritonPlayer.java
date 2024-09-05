@@ -226,6 +226,9 @@ public final class TritonPlayer extends MediaPlayer {
     /** @copybrief PlayerConsts::FORCE_DISABLE_EXOPLAYER */
     public static final String SETTINGS_FORCE_DISABLE_EXOPLAYER = PlayerConsts.FORCE_DISABLE_EXOPLAYER;
 
+    /** @copybrief PlayerConsts::FORCE_ENABLE_EXOPLAYER */
+    public static final String SETTINGS_FORCE_ENABLE_EXOPLAYER = PlayerConsts.FORCE_ENABLE_EXOPLAYER;
+
     /** @copybrief PlayerConsts::PLAYER_SERVICES_REGION */
     public static final String SETTINGS_PLAYER_SERVICES_REGION = PlayerConsts.PLAYER_SERVICES_REGION;
 

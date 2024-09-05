@@ -82,6 +82,9 @@ public final class PlayerConsts {
     /** Force the disabling of the ExoPlayer */
     public static final String FORCE_DISABLE_EXOPLAYER = "ForceDisableExoPlayer";
 
+    /** Force the enabling of the ExoPlayer */
+    public static final String FORCE_ENABLE_EXOPLAYER = "ForceEnableExoPlayer";
+
     /** PNAME; used for syndication report */
     public static final String PNAME     = "pname";
     public static final String PNAME_VAL = "TritonMobileSDK_Android";

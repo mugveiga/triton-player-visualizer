@@ -108,8 +108,10 @@ public class StreamPlayer extends MediaPlayer {
         }
 
         boolean forceDisableExoPlayer = settings.getBoolean(PlayerConsts.FORCE_DISABLE_EXOPLAYER, false);
+        boolean forceEnableExoPlayer = settings.getBoolean(PlayerConsts.FORCE_ENABLE_EXOPLAYER, false);
 
         boolean useExoPlayer = forceDisableExoPlayer ? false : isExoPlayerPackageInClassPath();
+        if (forceEnableExoPlayer) useExoPlayer = true;
 
         settings.putBoolean(USE_EXOPLAYER, useExoPlayer);
 
@@ -346,19 +348,21 @@ public class StreamPlayer extends MediaPlayer {
 
             MediaPlayer lowLevelPlayer;
             Log.i(TAG, "mMediaRoute == null ? " + (mMediaRoute == null));
-            if (mMediaRoute == null) {
-                boolean userExoPlayer = mLowLevelPlayerSettings.getBoolean(USE_EXOPLAYER, false);
-                Log.i(TAG, "userExoPlayer ? " + userExoPlayer);
-                if (userExoPlayer && (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
-                    Log.i(TAG, "will init mAndroidPlayer with TdExoPlayer");
-                    lowLevelPlayer = mAndroidPlayer = new TdExoPlayer(getContext(), mLowLevelPlayerSettings);
-                } else {
+
+            boolean userExoPlayer = mLowLevelPlayerSettings.getBoolean(USE_EXOPLAYER, false);
+            Log.i(TAG, "userExoPlayer ? " + userExoPlayer);
+
+            if (userExoPlayer) {
+                Log.i(TAG, "will init mAndroidPlayer with TdExoPlayer");
+                lowLevelPlayer = mAndroidPlayer = new TdExoPlayer(getContext(), mLowLevelPlayerSettings);
+            } else {
+                if (mMediaRoute == null) {
                     Log.i(TAG, "will init mAndroidPlayer with AndroidPlayer");
                     lowLevelPlayer = mAndroidPlayer = new AndroidPlayer(getContext(), mLowLevelPlayerSettings);
+                } else {
+                    Log.i(TAG, "will init mRemotePlayer with RemotePlayer");
+                    lowLevelPlayer = mRemotePlayer = new RemotePlayer(getContext(), mLowLevelPlayerSettings, mMediaRoute);
                 }
-            } else {
-                Log.i(TAG, "will init mRemotePlayer with RemotePlayer");
-                lowLevelPlayer = mRemotePlayer = new RemotePlayer(getContext(), mLowLevelPlayerSettings, mMediaRoute);
             }
 
             lowLevelPlayer.setOnInfoListener(mInputOnInfoListener);
