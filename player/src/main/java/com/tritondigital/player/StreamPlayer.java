@@ -5,15 +5,16 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.mediarouter.media.MediaRouter;
 
-import android.text.TextUtils;
-
 import com.google.android.exoplayer2.Format;
 import com.tritondigital.player.exovisualizer.FFTAudioProcessor;
-import com.tritondigital.util.*;
+import com.tritondigital.util.Assert;
+import com.tritondigital.util.Log;
+import com.tritondigital.util.NetworkUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,14 +68,15 @@ public class StreamPlayer extends MediaPlayer {
     private boolean mBuffering;
     private int mRestorePosition;
     private boolean timeshiftStreaming = false;
+    private final FFTAudioProcessor fftAudioProcessor;
 
     /**
      * Constructor
      */
     @SuppressWarnings("unchecked")
-    public StreamPlayer(@NonNull Context context, @NonNull Bundle settings, boolean isTimeshiftStreaming) {
+    public StreamPlayer(@NonNull Context context, @NonNull Bundle settings, boolean isTimeshiftStreaming, FFTAudioProcessor fftAudioProcessor) {
         super(context, settings);
-
+        this.fftAudioProcessor = fftAudioProcessor;
         this.timeshiftStreaming = isTimeshiftStreaming;
         // Validate the URL
         String streamUrl = settings.getString(SETTINGS_STREAM_URL);
@@ -354,7 +356,7 @@ public class StreamPlayer extends MediaPlayer {
 
             if (userExoPlayer) {
                 Log.i(TAG, "will init mAndroidPlayer with TdExoPlayer");
-                lowLevelPlayer = mAndroidPlayer = new TdExoPlayer(getContext(), mLowLevelPlayerSettings);
+                lowLevelPlayer = mAndroidPlayer = new TdExoPlayer(getContext(), mLowLevelPlayerSettings, fftAudioProcessor);
             } else {
                 if (mMediaRoute == null) {
                     Log.i(TAG, "will init mAndroidPlayer with AndroidPlayer");
@@ -371,14 +373,6 @@ public class StreamPlayer extends MediaPlayer {
             lowLevelPlayer.setOnStateChangedListener(mInputOnStateChangedListener);
             lowLevelPlayer.setOnAnalyticsReceivedListener(mInputAnalyticsReceivedListener);
             lowLevelPlayer.setOnCloudStreamInfoReceivedListener(mInputProgramsReceivedListened);
-        }
-    }
-
-    public FFTAudioProcessor getFftAudioProcessor() {
-        try {
-            return ((TdExoPlayer) mAndroidPlayer).getFftAudioProcessor();
-        } catch (Exception e) {
-            return null;
         }
     }
 

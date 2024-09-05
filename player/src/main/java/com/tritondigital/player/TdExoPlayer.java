@@ -172,18 +172,13 @@ public class TdExoPlayer extends MediaPlayer implements TdMetaDataListener {
     private final ArrayList<Message> mMessageQueue = new ArrayList<>();
     private final MainHandler mMainHandler;
     private volatile PlayerHandler mPlayerHandler;
-
-    private static FFTAudioProcessor fftAudioProcessor = new FFTAudioProcessor();
-
-    public FFTAudioProcessor getFftAudioProcessor() {
-        return fftAudioProcessor;
-    }
-
+    private final FFTAudioProcessor fftAudioProcessor;
     /**
      * Constructor
      */
-    public TdExoPlayer(@NonNull final Context context, @NonNull final Bundle settings) {
+    public TdExoPlayer(@NonNull final Context context, @NonNull final Bundle settings, FFTAudioProcessor fftAudioProcessor) {
         super(context, settings);
+        this.fftAudioProcessor = fftAudioProcessor;
         mMainHandler = new MainHandler(this);
         // Start the player thread
         Thread playerThread = new Thread(TAG) {
@@ -194,7 +189,7 @@ public class TdExoPlayer extends MediaPlayer implements TdMetaDataListener {
 
                 try {
                     if (mMainHandler != null) {
-                        mPlayerHandler = new PlayerHandler(context, mMainHandler, settings);
+                        mPlayerHandler = new PlayerHandler(context, mMainHandler, settings, fftAudioProcessor);
                         Looper.loop();
                     }
                 } catch (Exception e) {
@@ -455,6 +450,7 @@ public class TdExoPlayer extends MediaPlayer implements TdMetaDataListener {
 
         private ExoPlayer mExoPlayerLib;
         private boolean timeshiftStreaming = false;
+        private final FFTAudioProcessor fftAudioProcessor;
         private boolean isTimeshiftProgram = false;
         private boolean isTimeshiftProgramFirstPlay = true;
 
@@ -465,8 +461,9 @@ public class TdExoPlayer extends MediaPlayer implements TdMetaDataListener {
         private CountDownTimer bufferTimer;
         private int streamConnectionErrorCount = 0;
 
-        PlayerHandler(Context context, MainHandler mainHandler, Bundle settings) {
+        PlayerHandler(Context context, MainHandler mainHandler, Bundle settings, FFTAudioProcessor fftAudioProcessor) {
             super(Looper.getMainLooper());
+            this.fftAudioProcessor = fftAudioProcessor;
             mContext = context;
             mMainHandler = mainHandler;
             mSettings = settings;

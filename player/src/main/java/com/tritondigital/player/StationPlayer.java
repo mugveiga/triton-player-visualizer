@@ -66,9 +66,7 @@ public class StationPlayer extends MediaPlayer
     private static final String DOMAIN_NAME_PROD = "example.com";
     private static final String DOMAIN_NAME_PREPROD = "example.prepord.net";
 
-    public FFTAudioProcessor getFftAudioProcessor() {
-        return mStreamPlayer.getFftAudioProcessor();
-    }
+    public final FFTAudioProcessor fftAudioProcessor = new FFTAudioProcessor();
 
     /**
      * Constructor
@@ -329,7 +327,7 @@ public class StationPlayer extends MediaPlayer
                 if ( tTags != null )
                     streamSettings.putStringArray(StreamPlayer.SETTINGS_TTAGS, tTags);
 
-                mStreamPlayer = new StreamPlayer(getContext(), streamSettings, timeshiftStreaming);
+                mStreamPlayer = new StreamPlayer(getContext(), streamSettings, timeshiftStreaming, fftAudioProcessor);
                 mStreamPlayer.setMediaRoute(mMediaRoute);
                 mStreamPlayer.setOnCuePointReceivedListener(mStreamPlayerCuePointListener);
                 mStreamPlayer.setOnInfoListener(mStreamPlayerOnInfoListener);

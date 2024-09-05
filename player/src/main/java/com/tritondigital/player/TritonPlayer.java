@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import androidx.mediarouter.media.MediaRouter;
 import com.google.android.exoplayer2.Format;
+import com.tritondigital.player.exovisualizer.FFTAudioProcessor;
 import com.tritondigital.util.Log;
 import com.tritondigital.util.TrackingUtil;
 
@@ -239,7 +240,7 @@ public final class TritonPlayer extends MediaPlayer {
 
     private AudioManager mAudioManager;
 
-
+    public final FFTAudioProcessor fftAudioProcessor = new FFTAudioProcessor();
 
     /**
      * Constructor
@@ -261,7 +262,7 @@ public final class TritonPlayer extends MediaPlayer {
         } else if (!TextUtils.isEmpty(mount)) {
             mPlayer = new StationPlayer(context, settings);
         } else if (!TextUtils.isEmpty(streamUrl)) {
-            mPlayer = new StreamPlayer(context, settings, false);
+            mPlayer = new StreamPlayer(context, settings, false, fftAudioProcessor);
         } else {
             throw new IllegalArgumentException("\"settings.SETTINGS_STATION_MOUNT\" or \"settings.SETTINGS_STREAM_URL\" must be set");
         }
