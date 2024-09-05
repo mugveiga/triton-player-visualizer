@@ -316,8 +316,8 @@ public class StreamPlayer extends MediaPlayer {
 
     private void createLowLevelPlayerIfNeeded(boolean timeshiftStreaming, String streamUrl) {
         this.timeshiftStreaming = timeshiftStreaming;
+        Log.d(TAG, "createLowLevelPlayerIfNeeded mAndroidPlayer == null ? " + (mAndroidPlayer == null) + " and mRemotePlayer == null ? " + (mRemotePlayer == null));
         if ((mAndroidPlayer == null) && (mRemotePlayer == null)) {
-
             // Initial position
             mLowLevelPlayerSettings.putInt(SETTINGS_STREAM_POSITION, mRestorePosition);
             if (streamUrl != null && mUrlBuilder != null) {
@@ -345,13 +345,19 @@ public class StreamPlayer extends MediaPlayer {
             }
 
             MediaPlayer lowLevelPlayer;
+            Log.d(TAG, "mMediaRoute == null ? " + (mMediaRoute == null));
             if (mMediaRoute == null) {
                 boolean userExoPlayer = mLowLevelPlayerSettings.getBoolean(USE_EXOPLAYER, false);
-                if (userExoPlayer && (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH))
+                Log.d(TAG, "userExoPlayer ? " + userExoPlayer);
+                if (userExoPlayer && (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
+                    Log.d(TAG, "will init mAndroidPlayer with TdExoPlayer");
                     lowLevelPlayer = mAndroidPlayer = new TdExoPlayer(getContext(), mLowLevelPlayerSettings);
-                else
+                } else {
+                    Log.d(TAG, "will init mAndroidPlayer with AndroidPlayer");
                     lowLevelPlayer = mAndroidPlayer = new AndroidPlayer(getContext(), mLowLevelPlayerSettings);
+                }
             } else {
+                Log.d(TAG, "will init mRemotePlayer with RemotePlayer");
                 lowLevelPlayer = mRemotePlayer = new RemotePlayer(getContext(), mLowLevelPlayerSettings, mMediaRoute);
             }
 
@@ -579,6 +585,7 @@ public class StreamPlayer extends MediaPlayer {
         } catch (ClassNotFoundException ex) {
             present = false;
         }
+        Log.d(TAG, "isExoPlayerPackageInClassPath ? " + present);
         return present;
     }
 
