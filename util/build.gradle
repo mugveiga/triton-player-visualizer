@@ -1,10 +1,8 @@
 apply plugin: 'com.android.library'
 apply from: '../export_aar.gradle'
-apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdk COMPILE_SDK_VERSION.toInteger()
 
     defaultConfig {
         minSdkVersion TRITONSDK_MIN_SDK_VERSION.toInteger()
@@ -29,9 +27,7 @@ android {
 
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
-    kotlinOptions {
-        jvmTarget = '17'
-    }
+    namespace 'com.tritondigital.util'
 }
 
 dependencies {
@@ -39,14 +35,12 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api 'com.google.android.gms:play-services-base:17.5.0'
     api 'com.google.android.gms:play-services-analytics:17.0.0'
-    implementation 'androidx.core:core-ktx:1.13.1'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:rules:1.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation 'org.hamcrest:hamcrest-library:2.2'
-    androidTestImplementation 'junit:junit:4.12'
-
+    androidTestImplementation 'junit:junit:4.13.2'
 
 }
 

@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.mediarouter.media.MediaRouter;
 
-import com.google.android.exoplayer2.Format;
 import com.tritondigital.player.exovisualizer.FFTAudioProcessor;
 import com.tritondigital.util.Assert;
 import com.tritondigital.util.Log;
@@ -312,7 +311,8 @@ public class StreamPlayer extends MediaPlayer {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Low level players
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /// /////////////////////////////////////////////////////////////////////////////////////////////
 
     private void createLowLevelPlayerIfNeeded() {
         createLowLevelPlayerIfNeeded(false, null);
@@ -371,7 +371,6 @@ public class StreamPlayer extends MediaPlayer {
             lowLevelPlayer.setOnCuePointReceivedListener(mInputCuePointListener);
             lowLevelPlayer.setOnMetaDataReceivedListener(mInputMetaDataListener);
             lowLevelPlayer.setOnStateChangedListener(mInputOnStateChangedListener);
-            lowLevelPlayer.setOnAnalyticsReceivedListener(mInputAnalyticsReceivedListener);
             lowLevelPlayer.setOnCloudStreamInfoReceivedListener(mInputProgramsReceivedListened);
         }
     }
@@ -458,15 +457,6 @@ public class StreamPlayer extends MediaPlayer {
         }
     };
 
-    private final OnAnalyticsReceivedListener mInputAnalyticsReceivedListener = new OnAnalyticsReceivedListener() {
-        @Override
-        public void onAnalyticsReceivedListener(MediaPlayer player, Format format) {
-            if (player == mAndroidPlayer) {
-                notifyAnalytics(format);
-            }
-        }
-    };
-
     private final OnCloudStreamInfoReceivedListener mInputProgramsReceivedListened = new OnCloudStreamInfoReceivedListener() {
         @Override
         public void onCloudStreamInfoReceivedListener(MediaPlayer player, String cloudStreamInfo) {
@@ -516,7 +506,7 @@ public class StreamPlayer extends MediaPlayer {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // WIFI lock
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////////////////////////////
 
     private WifiManager.WifiLock mWifiLock;
 
@@ -544,7 +534,8 @@ public class StreamPlayer extends MediaPlayer {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Side-Band Player
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /// /////////////////////////////////////////////////////////////////////////////////////////////
 
     private String createSbmPlayerIfNeeded() {
         String sbmUrl = getSettings().getString(SETTINGS_SBM_URL);
@@ -578,7 +569,7 @@ public class StreamPlayer extends MediaPlayer {
     private boolean isExoPlayerPackageInClassPath() {
         boolean present = false;
         try {
-            Class.forName("com.google.android.exoplayer2.ExoPlayer");
+            Class.forName("androidx.media3.exoplayer.ExoPlayer");
             present = true;
         } catch (ClassNotFoundException ex) {
             present = false;
@@ -590,7 +581,8 @@ public class StreamPlayer extends MediaPlayer {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Media Router
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /// /////////////////////////////////////////////////////////////////////////////////////////////
 
     public void setMediaRoute(MediaRouter.RouteInfo routeInfo) {
 

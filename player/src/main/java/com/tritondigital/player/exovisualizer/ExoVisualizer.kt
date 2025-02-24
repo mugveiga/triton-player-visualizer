@@ -3,7 +3,7 @@ package com.tritondigital.player.exovisualizer
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import com.google.android.exoplayer2.Player
+import androidx.media3.common.Player
 
 /**
  * The visualizer is a view which listens to the FFT changes and forwards it to the band view.

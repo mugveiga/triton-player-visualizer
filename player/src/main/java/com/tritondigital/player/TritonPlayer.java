@@ -1,14 +1,16 @@
 package com.tritondigital.player;
 
 import static android.content.Context.AUDIO_SERVICE;
+
 import android.content.Context;
 import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+
 import androidx.mediarouter.media.MediaRouter;
-import com.google.android.exoplayer2.Format;
+
 import com.tritondigital.player.exovisualizer.FFTAudioProcessor;
 import com.tritondigital.util.Log;
 import com.tritondigital.util.TrackingUtil;
@@ -271,7 +273,6 @@ public final class TritonPlayer extends MediaPlayer {
         mPlayer.setOnMetaDataReceivedListener(mInOnMetaDataReceivedListener);
         mPlayer.setOnInfoListener(mInOnInfoListener);
         mPlayer.setOnStateChangedListener(mInOnStateChangedListener);
-        mPlayer.setOnAnalyticsReceivedListener(mInAnalyticsReceivedListener);
         mPlayer.setOnCloudStreamInfoReceivedListener(mOnCloudStreamInfoReceivedListener);
 
         mAudioManager = (AudioManager)context.getSystemService(AUDIO_SERVICE);
@@ -441,13 +442,6 @@ public final class TritonPlayer extends MediaPlayer {
             } else {
                 setState(state);
             }
-        }
-    };
-
-    private final OnAnalyticsReceivedListener mInAnalyticsReceivedListener = new OnAnalyticsReceivedListener() {
-        @Override
-        public void onAnalyticsReceivedListener(MediaPlayer player, Format format) {
-            notifyAnalytics(format);
         }
     };
 

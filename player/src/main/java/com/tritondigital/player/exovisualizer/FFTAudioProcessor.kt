@@ -2,15 +2,16 @@ package com.tritondigital.player.exovisualizer
 
 import android.media.AudioTrack
 import android.media.AudioTrack.ERROR_BAD_VALUE
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.Format
-import com.google.android.exoplayer2.audio.AudioProcessor
-import com.google.android.exoplayer2.util.Assertions
-import com.google.android.exoplayer2.util.Util
-import com.paramsen.noise.Noise
+import androidx.media3.common.C
+import androidx.media3.common.Format
+import androidx.media3.common.audio.AudioProcessor
+import androidx.media3.common.util.Assertions
+import androidx.media3.common.util.Util
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.math.max
+import com.paramsen.noise.Noise
+
 
 /**
  * An audio processor which forwards the input to the output,
