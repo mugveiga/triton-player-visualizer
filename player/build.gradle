@@ -68,5 +68,5 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
 
     // Library for FFT processing
-    implementation 'com.github.paramsen:noise:2.0.0'
+    implementation 'io.livekit:noise:2.0.0'
 }
