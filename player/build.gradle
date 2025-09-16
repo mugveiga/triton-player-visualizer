@@ -65,7 +65,7 @@ dependencies {
     implementation 'androidx.media3:media3-exoplayer-hls:1.4.0'
 
     // Library for FFT processing
-    implementation 'com.github.paramsen:noise:2.0.0'
+    implementation 'io.livekit:noise:2.0.0'
 
 }
 
